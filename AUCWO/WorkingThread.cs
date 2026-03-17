@@ -67,90 +67,97 @@ namespace AUCWO
 
     public static void GetMaping(string FileName)
         {
-
-            AppData.Instance.items.Clear();
-            ExcelPackage.License.SetNonCommercialPersonal("Your Name");
-            using (var package = new OfficeOpenXml.ExcelPackage(new FileInfo(FileName)))
+            try
             {
-                // Lấy worksheet đầu tiên và lấy cột đầu tiên 
-                var worksheet = package.Workbook.Worksheets[0];
-                int rowCount = worksheet.Dimension.Rows;
-                string ITEMCODE = worksheet.Cells[1, 1].Value?.ToString().Trim();
-                string LOT = worksheet.Cells[1, 9].Value?.ToString().Trim();
-                string STATUS = worksheet.Cells[1, 11].Value?.ToString().Trim();
-                //int colCount = worksheet.Dimension.Columns;
-                // kiểm tra xem đúng định dạng file chưa
-                //MessageBox.Show($"{ITEMCODE}");
-                Console.WriteLine($"Item = {ITEMCODE} , LOT = {LOT} , STATUS = {STATUS}");
-                if (ITEMCODE != "Material Number for Order CAUFVD-MATNR" || LOT != "If Column and Batch Number AFPOD-CHARG" || STATUS != "STATUS")
+                AppData.Instance.items.Clear();
+                ExcelPackage.License.SetNonCommercialPersonal("Your Name");
+                using (var package = new OfficeOpenXml.ExcelPackage(new FileInfo(FileName)))
                 {
-                    MessageBox.Show("File chưa đúng định dạng", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return;
-                }
-
-
-                // Duyệt qua từng hàng và cột để lấy dữ liệu
-                //lấy thời gian ngày tháng hiện tại
-                DateTime time = DateTime.Now;
-                for (int row = 2; row <= rowCount; row++) // Bỏ qua hàng tiêu đề
-                {
-                    string ItemSAP = worksheet.Cells[row, 1].Text.Trim(); // Cột A
-                                                                        // *** KIỂM TRA HÀNG CÓ DỮ LIỆU ***
-                    if (string.IsNullOrEmpty(ItemSAP))
+                    // Lấy worksheet đầu tiên và lấy cột đầu tiên 
+                    var worksheet = package.Workbook.Worksheets[0];
+                    int rowCount = worksheet.Dimension.Rows;
+                    string ITEMCODE = worksheet.Cells[1, 1].Value?.ToString().Trim();
+                    string LOT = worksheet.Cells[1, 9].Value?.ToString().Trim();
+                    string STATUS = worksheet.Cells[1, 11].Value?.ToString().Trim();
+                    //int colCount = worksheet.Dimension.Columns;
+                    // kiểm tra xem đúng định dạng file chưa
+                    //MessageBox.Show($"{ITEMCODE}");
+                    Console.WriteLine($"Item = {ITEMCODE} , LOT = {LOT} , STATUS = {STATUS}");
+                    if (ITEMCODE != "Material Number for Order CAUFVD-MATNR" || LOT != "If Column and Batch Number AFPOD-CHARG" || STATUS != "STATUS")
                     {
-                        // Bỏ qua hàng nếu cột MeTT rỗng
-                        continue;
+                        MessageBox.Show("File chưa đúng định dạng", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        return;
                     }
-                    string Plan = worksheet.Cells[row, 2].Text.Trim(); // Cột B
-                    string OderType = worksheet.Cells[row, 3].Text.Trim(); // Cột C
-                    string StartDate = worksheet.Cells[row, 4].Text.Trim(); // Cột D
-                    string EndDate = worksheet.Cells[row, 5].Text.Trim(); // Cột E
-                    string OrderQty = worksheet.Cells[row, 6].Text.Trim(); // Cột F
-                    string Unit = worksheet.Cells[row, 7].Text.Trim(); // Cột G
-                    string Location = worksheet.Cells[row, 8].Text.Trim(); // Cột H
-                    string LotSP = worksheet.Cells[row, 9].Text.Trim(); 
-                    string ProductionVer = worksheet.Cells[row, 10].Text.Trim(); // Cột J
-                    string Status = worksheet.Cells[row, 11].Text.Trim(); // Cột K
 
 
-                    // Tiền xử lý đầu vào
-                    var itemSapNorm = string.IsNullOrWhiteSpace(ItemSAP) ? null : ItemSAP.Trim();
-
-                    // Gọi Maping một lần
-                    var mapped = Maping(itemSapNorm);
-
-                    // Xác định status: nếu không map được => NG, ngược lại => null (OK ngầm định)
-                    var status = mapped == null ? "NG" : null;
-
-                    var Map = mapped == null ? itemSapNorm : Maping(itemSapNorm);
-
-
-
-                    // Tạo ItemRow (sửa "OderType" -> "OrderType" nếu class có property này)
-                    AppData.Instance.items.Add(new ItemRow
+                    // Duyệt qua từng hàng và cột để lấy dữ liệu
+                    //lấy thời gian ngày tháng hiện tại
+                    DateTime time = DateTime.Now;
+                    for (int row = 2; row <= rowCount; row++) // Bỏ qua hàng tiêu đề
                     {
-                        ItemSAP = itemSapNorm,
-                        PlanSAP = Plan,
-                        OderType = OderType,        // hoặc OrderType (đúng property)
-                        StartDate = StartDate,
-                        EndDate = EndDate,
-                        OrderQty = OrderQty,
-                        Unit = Unit,
-                        Location = Location,
-                        LotSP = LotSP,
-                        ProductionVer = ProductionVer,
-                        Status = status,
-                        Mapping = Map
-                    });
+                        string ItemSAP = worksheet.Cells[row, 1].Text.Trim(); // Cột A
+                                                                              // *** KIỂM TRA HÀNG CÓ DỮ LIỆU ***
+                        if (string.IsNullOrEmpty(ItemSAP))
+                        {
+                            // Bỏ qua hàng nếu cột MeTT rỗng
+                            continue;
+                        }
+                        string Plan = worksheet.Cells[row, 2].Text.Trim(); // Cột B
+                        string OderType = worksheet.Cells[row, 3].Text.Trim(); // Cột C
+                        string StartDate = worksheet.Cells[row, 4].Text.Trim(); // Cột D
+                        string EndDate = worksheet.Cells[row, 5].Text.Trim(); // Cột E
+                        string OrderQty = worksheet.Cells[row, 6].Text.Trim(); // Cột F
+                        string Unit = worksheet.Cells[row, 7].Text.Trim(); // Cột G
+                        string Location = worksheet.Cells[row, 8].Text.Trim(); // Cột H
+                        string LotSP = worksheet.Cells[row, 9].Text.Trim();
+                        string ProductionVer = worksheet.Cells[row, 10].Text.Trim(); // Cột J
+                        string Status = worksheet.Cells[row, 11].Text.Trim(); // Cột K
+
+
+                        // Tiền xử lý đầu vào
+                        var itemSapNorm = string.IsNullOrWhiteSpace(ItemSAP) ? null : ItemSAP.Trim();
+
+                        // Gọi Maping một lần
+                        var mapped = Maping(itemSapNorm);
+
+                        // Xác định status: nếu không map được => NG, ngược lại => null (OK ngầm định)
+                        var status = mapped == null ? "NG" : null;
+
+                        var Map = mapped == null ? itemSapNorm : Maping(itemSapNorm);
 
 
 
-                    //MessageBox.Show($"Item = {ItemSAP}, Maping = {Maping(ItemSAP)} , LOT = {LotSP}  ");
+                        // Tạo ItemRow (sửa "OderType" -> "OrderType" nếu class có property này)
+                        AppData.Instance.items.Add(new ItemRow
+                        {
+                            ItemSAP = itemSapNorm,
+                            PlanSAP = Plan,
+                            OderType = OderType,        // hoặc OrderType (đúng property)
+                            StartDate = StartDate,
+                            EndDate = EndDate,
+                            OrderQty = OrderQty,
+                            Unit = Unit,
+                            Location = Location,
+                            LotSP = LotSP,
+                            ProductionVer = ProductionVer,
+                            Status = status,
+                            Mapping = Map
+                        });
+
+
+
+                        //MessageBox.Show($"Item = {ItemSAP}, Maping = {Maping(ItemSAP)} , LOT = {LotSP}  ");
+
+                    }
 
                 }
-
             }
-          }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"File Không hợp lệ !", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+        }
 
         public static void GetLocation(string Line)
         {
@@ -375,7 +382,9 @@ namespace AUCWO
                 // Nếu đã NG từ trước thì không ghi đè
                 if (string.Equals(it.Status, "NG", StringComparison.OrdinalIgnoreCase))
                 {
-                    MessageBox.Show($"Có lỗi sảy ra với mã {it.ItemSAP} Vui Lòng Kiểm tra lại.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    //MessageBox.Show($"Có lỗi sảy ra với mã {it.ItemSAP} Vui Lòng Kiểm tra lại.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    
+                    it.Status = "Mã sản phẩm không đúng";
                     continue;
                 }
 
@@ -420,9 +429,12 @@ namespace AUCWO
                 // Nếu đã NG từ trước thì không ghi đè
                 if (string.Equals(it.Status, "NG", StringComparison.OrdinalIgnoreCase))
                 {
-                    MessageBox.Show($"Có lỗi sảy ra với mã {it.ItemSAP} Vui Lòng Kiểm tra lại.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    //MessageBox.Show($"Có lỗi sảy ra với mã {it.ItemSAP} Vui Lòng Kiểm tra lại.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    it.Status = "Mã sản phẩm không đúng";
                     continue;
+
                 }
+
 
 
 
@@ -437,34 +449,31 @@ namespace AUCWO
 
         public static void CheckItem(string ProdLine, string linkfile)
         {
+
             //maping tên cột trong file excel với tên cột trong database để lấy dữ liệu check
             GetMaping(linkfile);
-            foreach (var it in AppData.Instance.items)
-            { 
-            Console.WriteLine($"Item: {it.ItemSAP} , Maping: {it.Mapping} , Lot: {it.LotSP} , Status: {it.Status}");
-            }
+            //foreach (var it in AppData.Instance.items)
+            //{ 
+            //Console.WriteLine($"Item: {it.ItemSAP} , Maping: {it.Mapping} , Lot: {it.LotSP} , Status: {it.Status}");
+            //}
 
-                //Check theo bộ phận
-                if (ProdLine == "IK,GW,RFC,RFS")
-                {
+            //Check theo bộ phận
+            if (ProdLine == "IK,GW,RFC,RFS")
+            {
                 CheckDBMES();
-                }
+            }
 
 
             if (ProdLine == "MD")
             {
                 CheckMD();
                 //MessageBox.Show("Chưa Phát triển");
-
             }
 
             if (ProdLine == "EVS")
             {
-
                 //AppData.Instance.items.Clear();
                 CheckEvs();
-                //MessageBox.Show("Chưa Phát triển");
-                return;
             }
         }
     }

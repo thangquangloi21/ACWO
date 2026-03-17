@@ -7,32 +7,28 @@
       "RelativeMoniker": "D:0:0:{C828DCB7-B382-4DFB-9079-9DB5657B9B87}|AUCWO\\AUCWO.csproj|solutionrelative:aucwo\\from\\main.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C828DCB7-B382-4DFB-9079-9DB5657B9B87}|AUCWO\\AUCWO.csproj|d:\\4.dev\\aucwo\\aucwo\\from\\main.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "AbsoluteMoniker": "D:0:0:{C828DCB7-B382-4DFB-9079-9DB5657B9B87}|AUCWO\\AUCWO.csproj|D:\\4.DEV\\AUCWO\\aucwo\\from\\main.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{C828DCB7-B382-4DFB-9079-9DB5657B9B87}|AUCWO\\AUCWO.csproj|solutionrelative:aucwo\\from\\main.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C828DCB7-B382-4DFB-9079-9DB5657B9B87}|AUCWO\\AUCWO.csproj|D:\\4.DEV\\AUCWO\\aucwo\\model\\location.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C828DCB7-B382-4DFB-9079-9DB5657B9B87}|AUCWO\\AUCWO.csproj|solutionrelative:aucwo\\model\\location.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C828DCB7-B382-4DFB-9079-9DB5657B9B87}|AUCWO\\AUCWO.csproj|D:\\4.DEV\\AUCWO\\aucwo\\from\\main.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C828DCB7-B382-4DFB-9079-9DB5657B9B87}|AUCWO\\AUCWO.csproj|solutionrelative:aucwo\\from\\main.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{C828DCB7-B382-4DFB-9079-9DB5657B9B87}|AUCWO\\AUCWO.csproj|D:\\4.DEV\\AUCWO\\aucwo\\workingthread.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{C828DCB7-B382-4DFB-9079-9DB5657B9B87}|AUCWO\\AUCWO.csproj|solutionrelative:aucwo\\workingthread.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{C828DCB7-B382-4DFB-9079-9DB5657B9B87}|AUCWO\\AUCWO.csproj|D:\\4.DEV\\AUCWO\\aucwo\\model\\location.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C828DCB7-B382-4DFB-9079-9DB5657B9B87}|AUCWO\\AUCWO.csproj|solutionrelative:aucwo\\model\\location.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{C828DCB7-B382-4DFB-9079-9DB5657B9B87}|AUCWO\\AUCWO.csproj|D:\\4.DEV\\AUCWO\\aucwo\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{C828DCB7-B382-4DFB-9079-9DB5657B9B87}|AUCWO\\AUCWO.csproj|solutionrelative:aucwo\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C828DCB7-B382-4DFB-9079-9DB5657B9B87}|AUCWO\\AUCWO.csproj|D:\\4.DEV\\AUCWO\\aucwo\\sevices\\conndb.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C828DCB7-B382-4DFB-9079-9DB5657B9B87}|AUCWO\\AUCWO.csproj|solutionrelative:aucwo\\sevices\\conndb.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{C828DCB7-B382-4DFB-9079-9DB5657B9B87}|AUCWO\\AUCWO.csproj|d:\\4.dev\\aucwo\\aucwo\\model\\item.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C828DCB7-B382-4DFB-9079-9DB5657B9B87}|AUCWO\\AUCWO.csproj|solutionrelative:aucwo\\model\\item.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C828DCB7-B382-4DFB-9079-9DB5657B9B87}|AUCWO\\AUCWO.csproj|D:\\4.DEV\\AUCWO\\aucwo\\model\\item.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C828DCB7-B382-4DFB-9079-9DB5657B9B87}|AUCWO\\AUCWO.csproj|solutionrelative:aucwo\\model\\item.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{C828DCB7-B382-4DFB-9079-9DB5657B9B87}|AUCWO\\AUCWO.csproj|D:\\4.DEV\\AUCWO\\aucwo\\sevices\\conndb.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C828DCB7-B382-4DFB-9079-9DB5657B9B87}|AUCWO\\AUCWO.csproj|solutionrelative:aucwo\\sevices\\conndb.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{C828DCB7-B382-4DFB-9079-9DB5657B9B87}|AUCWO\\AUCWO.csproj|D:\\4.DEV\\AUCWO\\aucwo\\data\\appdata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -62,8 +58,22 @@
       "DocumentGroups": [
         {
           "DockedHeight": 200,
-          "SelectedChildIndex": 8,
+          "SelectedChildIndex": 7,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\4.DEV\\AUCWO\\AUCWO\\Program.cs",
+              "RelativeDocumentMoniker": "AUCWO\\Program.cs",
+              "ToolTip": "D:\\4.DEV\\AUCWO\\AUCWO\\Program.cs",
+              "RelativeToolTip": "AUCWO\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAAjAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-28T08:43:31.208Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
             {
               "$type": "Bookmark",
               "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
@@ -74,13 +84,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 5,
               "Title": "Item.cs",
               "DocumentMoniker": "D:\\4.DEV\\AUCWO\\AUCWO\\Model\\Item.cs",
               "RelativeDocumentMoniker": "AUCWO\\Model\\Item.cs",
               "ToolTip": "D:\\4.DEV\\AUCWO\\AUCWO\\Model\\Item.cs",
               "RelativeToolTip": "AUCWO\\Model\\Item.cs",
-              "ViewState": "AgIAAA4AAAAAAAAAAAAxwBsAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAYwBcAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-03-02T03:55:02.943Z",
               "EditorCaption": ""
@@ -93,14 +103,14 @@
               "RelativeDocumentMoniker": "AUCWO\\Sevices\\ConnDB.cs",
               "ToolTip": "D:\\4.DEV\\AUCWO\\AUCWO\\Sevices\\ConnDB.cs",
               "RelativeToolTip": "AUCWO\\Sevices\\ConnDB.cs",
-              "ViewState": "AgIAAA0AAAAAAAAAAAAqwCEAAAANAAAAAAAAAA==",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAAB8AAAAuAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-02-28T07:31:54.945Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "Location.cs",
               "DocumentMoniker": "D:\\4.DEV\\AUCWO\\AUCWO\\Model\\Location.cs",
               "RelativeDocumentMoniker": "AUCWO\\Model\\Location.cs",
@@ -113,41 +123,15 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "Program.cs",
-              "DocumentMoniker": "D:\\4.DEV\\AUCWO\\AUCWO\\Program.cs",
-              "RelativeDocumentMoniker": "AUCWO\\Program.cs",
-              "ToolTip": "D:\\4.DEV\\AUCWO\\AUCWO\\Program.cs",
-              "RelativeToolTip": "AUCWO\\Program.cs",
-              "ViewState": "AgIAAAwAAAAAAAAAAAAYwBgAAAAjAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-28T08:43:31.208Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 2,
               "Title": "WorkingThread.cs",
               "DocumentMoniker": "D:\\4.DEV\\AUCWO\\AUCWO\\WorkingThread.cs",
               "RelativeDocumentMoniker": "AUCWO\\WorkingThread.cs",
               "ToolTip": "D:\\4.DEV\\AUCWO\\AUCWO\\WorkingThread.cs",
               "RelativeToolTip": "AUCWO\\WorkingThread.cs",
-              "ViewState": "AgIAAIYBAAAAAAAAAAAqwJIBAAAMAAAAAAAAAA==",
+              "ViewState": "AgIAALwBAAAAAAAAAIAwwMEBAAAbAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-03-13T03:18:40.179Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Main.Designer.cs",
-              "DocumentMoniker": "D:\\4.DEV\\AUCWO\\AUCWO\\From\\Main.Designer.cs",
-              "RelativeDocumentMoniker": "AUCWO\\From\\Main.Designer.cs",
-              "ToolTip": "D:\\4.DEV\\AUCWO\\AUCWO\\From\\Main.Designer.cs",
-              "RelativeToolTip": "AUCWO\\From\\Main.Designer.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAA3AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-28T07:26:51.815Z",
               "EditorCaption": ""
             },
             {
@@ -158,7 +142,7 @@
               "RelativeDocumentMoniker": "AUCWO\\From\\Main.cs",
               "ToolTip": "D:\\4.DEV\\AUCWO\\AUCWO\\From\\Main.cs",
               "RelativeToolTip": "AUCWO\\From\\Main.cs",
-              "ViewState": "AgIAAFABAAAAAAAAAAAcwGIBAAAhAAAAAAAAAA==",
+              "ViewState": "AgIAAPIAAAAAAAAAAAAAANgAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-02-28T08:43:14.975Z",
               "EditorCaption": ""
@@ -177,7 +161,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 7,
               "Title": "AppData.cs",
               "DocumentMoniker": "D:\\4.DEV\\AUCWO\\AUCWO\\Data\\AppData.cs",
               "RelativeDocumentMoniker": "AUCWO\\Data\\AppData.cs",
@@ -185,12 +169,11 @@
               "RelativeToolTip": "AUCWO\\Data\\AppData.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-28T07:30:50.427Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-02-28T07:30:50.427Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 8,
               "Title": "loading_wait.cs [Design]",
               "DocumentMoniker": "D:\\4.DEV\\AUCWO\\AUCWO\\From\\loading\\loading_wait.cs",
               "RelativeDocumentMoniker": "AUCWO\\From\\loading\\loading_wait.cs",
@@ -201,7 +184,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 11,
               "Title": "loading_wait.Designer.cs",
               "DocumentMoniker": "D:\\4.DEV\\AUCWO\\AUCWO\\From\\loading\\loading_wait.Designer.cs",
               "RelativeDocumentMoniker": "AUCWO\\From\\loading\\loading_wait.Designer.cs",
@@ -213,7 +196,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 9,
               "Title": "loading_wait.cs",
               "DocumentMoniker": "D:\\4.DEV\\AUCWO\\AUCWO\\From\\loading\\loading_wait.cs",
               "RelativeDocumentMoniker": "AUCWO\\From\\loading\\loading_wait.cs",
@@ -225,7 +208,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 10,
               "Title": "LoadingControl.Designer.cs",
               "DocumentMoniker": "D:\\4.DEV\\AUCWO\\AUCWO\\From\\loading\\LoadingControl.Designer.cs",
               "RelativeDocumentMoniker": "AUCWO\\From\\loading\\LoadingControl.Designer.cs",

@@ -209,49 +209,50 @@ namespace AUCWO
             LblNG.Text = $"{totalNG}/{total}";
         }
 
+        //private async void Check_WO(object sender, EventArgs e) { }
 
-        private void Check_WO(object sender, EventArgs e)
+
+        private async void Check_WO(object sender, EventArgs e)
         {
+
             try
             {
+
                 var LinkFile = LinkTbx.Text;
                 var Line = Prod_LineCBB.Text;
-                Console.WriteLine(Line);
-                if (LinkFile == "")
+                AppData.Instance.items.Clear();
+
+                if (string.IsNullOrWhiteSpace(LinkFile))
                 {
                     MessageBox.Show("Chọn File để thực hiện");
                     return;
                 }
 
-                if (Line == "")
+                if (string.IsNullOrWhiteSpace(Line))
                 {
                     MessageBox.Show("Chọn Line để thực hiện");
                     return;
                 }
-                //lặp từng dòng trong file excel, lấy dữ liệu và kiểm tra với database
+
                 loading.ShowLoading();
-                Task.Run(() =>
+
+                // Chạy xử lý ở thread khác và CHỜ nó hoàn thành
+                await Task.Run(() =>
                 {
-
-                    //xử lý
                     WorkingThread.CheckItem(Line, LinkFile);
-
-                    this.Invoke(new Action(() =>
-                    {
-
-                        loading.HideLoading();
-                        UpdateSummaryFromList();
-                        DisPlayData();
-                        //MessageBox.Show("Hoàn thành!");
-                        //Update_data();
-                    }));
                 });
-            }
-            catch (Exception ex) {
+
+                // Sau khi xử lý xong → cập nhật UI
                 loading.HideLoading();
-                MessageBox.Show("Hệ thống đang lỗi vui lòng thử lại sau !", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                UpdateSummaryFromList();
+                DisPlayData();
             }
-            
+            catch
+            {
+                loading.HideLoading();
+                MessageBox.Show("Hệ thống đang lỗi vui lòng thử lại sau !", "Lỗi",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            } 
 
         }
 
