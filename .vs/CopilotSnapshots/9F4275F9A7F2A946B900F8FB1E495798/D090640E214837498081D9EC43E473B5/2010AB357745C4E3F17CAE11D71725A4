@@ -1,0 +1,62 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using OfficeOpenXml;
+
+
+namespace AUCWO
+{
+    public partial class Main : Form
+    {
+        private loading_wait loading;
+        public Main()
+        {
+            InitializeComponent();
+            ExcelPackage.License.SetNonCommercialPersonal("Your Name");
+            loading = new loading_wait();
+            this.Controls.Add(loading);
+            this.Controls.SetChildIndex(loading, 0);
+        }
+
+        private void Btn_Upload_Click(object sender, EventArgs e)
+        {
+                LinkTbx.Text = WorkingThread.GetFile(); 
+        }
+
+        private void Check_WO(object sender, EventArgs e)
+        {
+            var LinkFile = LinkTbx.Text;
+            if (LinkFile == "")
+            {
+                MessageBox.Show("Chọn File để thực hiện");
+                return;
+            }
+            //lặp từng dòng trong file excel, lấy dữ liệu và kiểm tra với database
+            loading.ShowLoading();
+            Task.Run(() =>
+            {
+                //UpLoadFileSL12(filePath);
+                //upload_master(filePath);
+                //MessageBox.Show("đang hoàn thành!");
+                //giả lập load 5 giây
+                System.Threading.Thread.Sleep(5000);    
+
+                this.Invoke(new Action(() =>
+                {
+                    loading.HideLoading();
+                    //MessageBox.Show("Hoàn thành!");
+
+                    //Update_data();
+                }));
+            });
+
+        }
+    }
+}
