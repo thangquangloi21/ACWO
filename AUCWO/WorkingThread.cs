@@ -153,7 +153,9 @@ namespace AUCWO
                 }
             }
             catch (Exception ex)
+            
             {
+                Console.WriteLine(ex.ToString());
                 MessageBox.Show($"File Không hợp lệ !", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
@@ -189,6 +191,8 @@ namespace AUCWO
             // Giả sử class của bạn là:
             // public class ItemDto { public string Mapping; public string LotSP; public string Status; }
 
+
+
             var mesDB = new Classa();
 
             // 1) Lọc item đủ dữ liệu, và không phải NG sẵn
@@ -221,6 +225,8 @@ namespace AUCWO
                     //MessageBox.Show($"Có lỗi sảy ra với mã {it.ItemSAP} Vui Lòng Kiểm tra lại.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     continue;
                 }
+
+
                    
 
                 // Nếu thiếu dữ liệu key thì không thể kiểm, giữ nguyên (hoặc định nghĩa lại là "UNKNOWN")
@@ -315,11 +321,7 @@ namespace AUCWO
 
             var sql = "SELECT wo_part AS Part, wo_lot_next AS Lot " +
                 "FROM [Data_qad].[dbo].[wo_mstr] " +
-                "WHERE wo__chr01 = @loc AND wo_part = @item AND wo_lot_next = @lot " +
-                "UNION ALL " +
-                "SELECT MES_PART AS Part, LOT_SERIAL AS Lot " +
-                "FROM DB_SAP_DWH.dbo.WORK_ORDER_ALLOCATE " +
-                "WHERE LOCATION_ID = @loc AND MES_PART = @item AND LOT_SERIAL = @lot ";
+                "WHERE wo__chr01 = @loc AND wo_part = @item AND wo_lot_next = @lot ";
 
             SqlParameter[] para = new SqlParameter[]
             {
@@ -400,6 +402,8 @@ namespace AUCWO
         }
 
 
+
+
         public static async Task<string> GetTimeUpdate(string system)
         {
             var sql = "SELECT TOP (1) [ID] ,[SYSTEM] ,[TIME] FROM [ACWO].[dbo].[DataStatus]  where system = @system order by id desc";
@@ -417,8 +421,6 @@ namespace AUCWO
 
       
 
-
-
         public static  void CheckMD()
         {
             foreach (var it in AppData.Instance.items)
@@ -435,9 +437,6 @@ namespace AUCWO
 
                 }
 
-
-
-
                 // Quy ước: exists = true → NG; exists = false → OK
                 it.Status = status ? "NG" : "OK";
 
@@ -447,33 +446,157 @@ namespace AUCWO
             }
         }
 
+        public static void CheckSAPForItems()
+        {
+            foreach (var it in AppData.Instance.items)
+            {
+                // Keep the previous validation result
+                if (string.Equals(it.Status, "Mã sản phẩm không đúng", StringComparison.OrdinalIgnoreCase))
+                    continue;
+
+                if (string.IsNullOrWhiteSpace(it.Mapping) || string.IsNullOrWhiteSpace(it.LotSP))
+                    continue;
+
+                bool existsInSap = CheckSAP(it.Mapping.Trim(), it.LotSP.Trim());
+
+                // SAP found => NG, not found => keep current status
+                if (existsInSap)
+                    it.Status = "Đã tồn tại ở SAP";
+
+                Console.WriteLine($"SAP check - Item: {it.Mapping}, Lot: {it.LotSP}, Status: {it.Status}");
+            }
+        }
+
+
         public static void CheckItem(string ProdLine, string linkfile)
         {
-
             //maping tên cột trong file excel với tên cột trong database để lấy dữ liệu check
             GetMaping(linkfile);
-            //foreach (var it in AppData.Instance.items)
-            //{ 
-            //Console.WriteLine($"Item: {it.ItemSAP} , Maping: {it.Mapping} , Lot: {it.LotSP} , Status: {it.Status}");
-            //}
 
-            //Check theo bộ phận
             if (ProdLine == "IK,GW,RFC,RFS")
             {
-                CheckDBMES();
+                CheckDBMESAndSAP(); // check MES + SAP
             }
-
 
             if (ProdLine == "MD")
             {
-                CheckMD();
-                //MessageBox.Show("Chưa Phát triển");
+                CheckQADAndSAPForMD(); // check QAD + SAP
             }
 
             if (ProdLine == "EVS")
             {
-                //AppData.Instance.items.Clear();
-                CheckEvs();
+                CheckSAPOnly(); // chỉ check SAP
+            }
+        }
+
+        public static void CheckDBMESAndSAP()
+        {
+            var mesDB = new Classa();
+
+            var pairs = AppData.Instance.items
+                .Where(it => !string.Equals(it.Status, "NG", StringComparison.OrdinalIgnoreCase))
+                .Where(it => !string.IsNullOrWhiteSpace(it.Mapping) && !string.IsNullOrWhiteSpace(it.LotSP))
+                .Select(it => (Item: it.Mapping.Trim(), Lot: it.LotSP.Trim()))
+                .Distinct()
+                .ToList();
+
+            var mesExistence = mesDB.CheckItemsExistBulk(pairs);
+
+            foreach (var it in AppData.Instance.items)
+            {
+                if (string.Equals(it.Status, "NG", StringComparison.OrdinalIgnoreCase))
+                {
+                    it.Status = "Mã sản phẩm không đúng";
+                    continue;
+                }
+
+                if (string.IsNullOrWhiteSpace(it.Mapping) || string.IsNullOrWhiteSpace(it.LotSP))
+                    continue;
+
+                var item = it.Mapping.Trim();
+                var lot = it.LotSP.Trim();
+                var key = (item, lot);
+
+                bool existsInMes;
+                if (!mesExistence.TryGetValue(key, out existsInMes))
+                    existsInMes = false;
+
+                bool existsInSap = CheckSAP(item, lot);
+
+                if (existsInSap && existsInMes)
+                {
+                    it.Status = "Đã có trên SAP, MES";
+                }
+                else if (existsInSap && !existsInMes)
+                {
+                    it.Status = "Đã có trên SAP, chưa có trên MES";
+                }
+                else if (!existsInSap && existsInMes)
+                {
+                    it.Status = "Đã có trên MES";
+                }
+                else
+                {
+                    it.Status = "OK";
+                }
+
+                Console.WriteLine($"Item: {it.Mapping}, Lot: {it.LotSP}, Status: {it.Status}");
+            }
+        }
+
+        public static void CheckQADAndSAPForMD()
+        {
+            foreach (var it in AppData.Instance.items)
+            {
+                if (string.Equals(it.Status, "NG", StringComparison.OrdinalIgnoreCase))
+                {
+                    it.Status = "Mã sản phẩm không đúng";
+                    continue;
+                }
+
+                if (string.IsNullOrWhiteSpace(it.Mapping) || string.IsNullOrWhiteSpace(it.LotSP))
+                    continue;
+
+                var item = it.Mapping.Trim();
+                var lot = it.LotSP.Trim();
+
+                bool existsInQAD = CheckQAD_SAP("03010", item, lot);
+                bool existsInSAP = CheckSAP(item, lot);
+
+                if (existsInQAD && existsInSAP)
+                    it.Status = "Đã có trên QAD, SAP";
+                else if (existsInQAD && !existsInSAP)
+                    it.Status = "Đã có trên QAD";
+                else if (!existsInQAD && existsInSAP)
+                    it.Status = "Đã có trên SAP";
+                else
+                    it.Status = "OK";
+
+                Console.WriteLine($"Item: {it.Mapping}, Lot: {it.LotSP}, Status: {it.Status}");
+            }
+        }
+
+        public static void CheckSAPOnly()
+        {
+            foreach (var it in AppData.Instance.items)
+            {
+                if (string.Equals(it.Status, "NG", StringComparison.OrdinalIgnoreCase))
+                {
+                    it.Status = "Mã sản phẩm không đúng";
+                    continue;
+                }
+
+                if (string.IsNullOrWhiteSpace(it.Mapping) || string.IsNullOrWhiteSpace(it.LotSP))
+                    continue;
+
+                var item = it.Mapping.Trim();
+                var lot  = it.LotSP.Trim();
+
+                bool existsInSap = CheckSAP(item, lot);
+
+                it.Status = existsInSap ? "Đã tồn tại ở SAP" : "OK";
+
+                Console.WriteLine($"Item: {it.Mapping}, Lot: {it.LotSP}, Status: {it.Status}");
             }
         }
     }

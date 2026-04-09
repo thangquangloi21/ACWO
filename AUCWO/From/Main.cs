@@ -24,12 +24,13 @@ namespace AUCWO
         public Main()
         {
             InitializeComponent();
+            Viewdata.CellFormatting += Viewdata_CellFormatting;
+
             _timer = new Timer
             {
                 Interval = 10_000 // 10,000 ms = 10S
             };
             _timer.Tick += Timer_Tick;
-
 
             ExcelPackage.License.SetNonCommercialPersonal("Your Name");
             loading = new loading_wait();
@@ -163,32 +164,28 @@ namespace AUCWO
             Viewdata.ColumnHeadersHeight = 80; // Tăng chiều cao header cho đẹp (tùy chọn)
         }
 
-
+        // tô màu các dòng có status khác OK
         private void Viewdata_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
-            // Kiểm tra nếu dòng hợp lệ và có cột Status
-            if (e.RowIndex >= 0 && Viewdata.Columns["colStatus"] != null)
+            if (e.RowIndex < 0 || Viewdata.Columns["colStatus"] == null)
+                return;
+
+            var statusCell = Viewdata.Rows[e.RowIndex].Cells["colStatus"];
+            var statusText = statusCell.Value == null ? string.Empty : statusCell.Value.ToString().Trim();
+
+            if (string.Equals(statusText, "OK", StringComparison.OrdinalIgnoreCase))
             {
-                // Lấy giá trị Status từ dòng hiện tại
-                var statusCell = Viewdata.Rows[e.RowIndex].Cells["colStatus"];
-                if (statusCell.Value != null && statusCell.Value.ToString().Trim().Equals("NG", StringComparison.OrdinalIgnoreCase))
-                {
-                    // Tô nền đỏ cho toàn bộ dòng
-                    Viewdata.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.LightCoral;  // Hoặc Color.Red nếu muốn đỏ đậm
-                    Viewdata.Rows[e.RowIndex].DefaultCellStyle.SelectionBackColor = Color.DarkRed;  // Màu khi chọn dòng (tùy chọn)
-                }
-                else if (statusCell.Value != null && statusCell.Value.ToString().Trim().Equals("Mã sản phẩm không đúng", StringComparison.OrdinalIgnoreCase))
-                {
-                    // Tô nền đỏ cho toàn bộ dòng
-                    Viewdata.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Yellow;  // Hoặc Color.Red nếu muốn đỏ đậm
-                    Viewdata.Rows[e.RowIndex].DefaultCellStyle.SelectionBackColor = Color.DarkRed;  // Màu khi chọn dòng (tùy chọn)
-                }
-                else
-                {
-                    // Reset về màu mặc định nếu không phải NG (ví dụ trắng hoặc mặc định)
-                    Viewdata.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.White;
-                    Viewdata.Rows[e.RowIndex].DefaultCellStyle.SelectionBackColor = SystemColors.Highlight;
-                }
+                Viewdata.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.White;
+                Viewdata.Rows[e.RowIndex].DefaultCellStyle.ForeColor = Color.Black;
+                Viewdata.Rows[e.RowIndex].DefaultCellStyle.SelectionBackColor = SystemColors.Highlight;
+                Viewdata.Rows[e.RowIndex].DefaultCellStyle.SelectionForeColor = SystemColors.HighlightText;
+            }
+            else
+            {
+                Viewdata.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.LightCoral;
+                Viewdata.Rows[e.RowIndex].DefaultCellStyle.ForeColor = Color.Black;
+                Viewdata.Rows[e.RowIndex].DefaultCellStyle.SelectionBackColor = Color.DarkRed;
+                Viewdata.Rows[e.RowIndex].DefaultCellStyle.SelectionForeColor = Color.White;
             }
         }
 
@@ -201,9 +198,8 @@ namespace AUCWO
             var items = AppData.Instance.items;
 
             int total = items.Count;
-            int totalNG = items.Count(x => string.Equals(x.Status, "NG", StringComparison.OrdinalIgnoreCase));
-            int totalOK = total - totalNG;
-
+            int totalOK = items.Count(x => string.Equals(x.Status, "OK", StringComparison.OrdinalIgnoreCase));
+            int totalNG = total - totalOK;
 
             LblOK.Text = $"{totalOK}/{total}";
             LblNG.Text = $"{totalNG}/{total}";
@@ -214,7 +210,7 @@ namespace AUCWO
 
         private async void Check_WO(object sender, EventArgs e)
         {
-
+            //AppData.Instance.StartTime = DateTime.Now.ToString("HH:mm:ss");
             try
             {
 
@@ -239,6 +235,7 @@ namespace AUCWO
                 // Chạy xử lý ở thread khác và CHỜ nó hoàn thành
                 await Task.Run(() =>
                 {
+                    AppData.Instance.StartTime = DateTime.Now.ToString("HH:mm:ss");
                     WorkingThread.CheckItem(Line, LinkFile);
                 });
 
@@ -246,6 +243,8 @@ namespace AUCWO
                 loading.HideLoading();
                 UpdateSummaryFromList();
                 DisPlayData();
+                AppData.Instance.EndTime = DateTime.Now.ToString("HH:mm:ss");
+                TimeRun.Text = $"Start: {AppData.Instance.StartTime} -  END: {AppData.Instance.EndTime}";
             }
             catch
             {
@@ -256,6 +255,7 @@ namespace AUCWO
 
         }
 
+        // Xuất dữ liệu
         private void Btn_Export(object sender, EventArgs e)
         {
 
@@ -295,12 +295,6 @@ namespace AUCWO
                             // === 2. Xuất dữ liệu + tô màu + căn giữa ===
                             for (int row = 0; row < Viewdata.Rows.Count; row++)
                             {
-                                bool isNG = false;
-                                bool isNG1 = false;
-
-
-                                // Kiểm tra Status ở cột "colStatus" (giả sử là cột cuối cùng hoặc bạn biết index)
-                                // Nếu không chắc index, dùng tên cột để tìm
                                 int statusColumnIndex = -1;
                                 for (int col = 0; col < Viewdata.Columns.Count; col++)
                                 {
@@ -311,47 +305,25 @@ namespace AUCWO
                                     }
                                 }
 
+                                var statusValue = string.Empty;
                                 if (statusColumnIndex >= 0)
-                                {
-                                    var statusValue = Viewdata.Rows[row].Cells[statusColumnIndex].Value?.ToString()?.Trim();
-                                    if (statusValue?.Equals("NG", StringComparison.OrdinalIgnoreCase) == true)
-                                    {
-                                        isNG = true;
-                                    }
-                                    //var statusValue = Viewdata.Rows[row].Cells[statusColumnIndex].Value?.ToString()?.Trim();
-                                    if (statusValue?.Equals("Mã sản phẩm không đúng", StringComparison.OrdinalIgnoreCase) == true)
-                                    {
-                                        isNG1 = true;
-                                    }
-                                }
+                                    statusValue = Viewdata.Rows[row].Cells[statusColumnIndex].Value?.ToString()?.Trim() ?? string.Empty;
 
                                 for (int col = 0; col < Viewdata.Columns.Count; col++)
                                 {
                                     var cellValue = Viewdata.Rows[row].Cells[col].Value;
                                     worksheet.Cells[row + 2, col + 1].Value = cellValue;
-
-                                    // Căn giữa ngang và dọc cho mọi ô dữ liệu
                                     worksheet.Cells[row + 2, col + 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
                                     worksheet.Cells[row + 2, col + 1].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
                                 }
 
-                                // Nếu là dòng NG → tô đỏ toàn bộ dòng (nền đỏ nhạt, chữ đen cho dễ đọc)
-                                if (isNG)
+                                // OK thì không tô, còn lại tô đỏ
+                                if (!string.Equals(statusValue, "OK", StringComparison.OrdinalIgnoreCase))
                                 {
                                     using (var range = worksheet.Cells[row + 2, 1, row + 2, Viewdata.Columns.Count])
                                     {
                                         range.Style.Fill.PatternType = ExcelFillStyle.Solid;
-                                        range.Style.Fill.BackgroundColor.SetColor(Color.FromArgb(255, 182, 193)); // LightCoral / đỏ nhạt
-                                                                                                                  // Nếu muốn chữ trắng: range.Style.Font.Color.SetColor(Color.White);
-                                    }
-                                }
-                                if (isNG1)
-                                {
-                                    using (var range = worksheet.Cells[row + 2, 1, row + 2, Viewdata.Columns.Count])
-                                    {
-                                        range.Style.Fill.PatternType = ExcelFillStyle.Solid;
-                                        range.Style.Fill.BackgroundColor.SetColor(Color.FromArgb(255, 255, 102)); // LightCoral / đỏ nhạt
-                                                                                                                  // Nếu muốn chữ trắng: range.Style.Font.Color.SetColor(Color.White);
+                                        range.Style.Fill.BackgroundColor.SetColor(Color.LightCoral);
                                     }
                                 }
                             }
@@ -401,7 +373,8 @@ namespace AUCWO
 
         private void LoadStatus(object sender, EventArgs e)
         {
-            Console.WriteLine(WorkingThread.GetTimeUpdate("MES"));
+            //Console.WriteLine(WorkingThread.GetTimeUpdate("MES"));
+            MessageBox.Show("Chỉ ấn khi lỗi");
             
         }
     }

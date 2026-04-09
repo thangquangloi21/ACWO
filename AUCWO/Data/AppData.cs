@@ -30,6 +30,9 @@ namespace AUCWO
         public string StatusExpQAD { get; set; }
         public string StatusExpSAP { get; set; }
 
+        public string StartTime { get; set; }
+        public string EndTime { get; set; }
+
 
     }
 }

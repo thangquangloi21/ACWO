@@ -21,6 +21,7 @@ namespace AUCWO
                 Application.Run(new Main());
             }
             catch (Exception ex) {
+                Console.WriteLine(ex.ToString());
                 MessageBox.Show("Hệ thống đang lỗi vui lòng thử lại sau !", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Application.Exit();
             }

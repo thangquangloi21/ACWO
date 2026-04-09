@@ -56,6 +56,7 @@ namespace AUCWO
             this.label7 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.Viewdata = new System.Windows.Forms.DataGridView();
+            this.TimeRun = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -66,6 +67,7 @@ namespace AUCWO
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.panel1.Controls.Add(this.TimeRun);
             this.panel1.Controls.Add(this.groupBox1);
             this.panel1.Controls.Add(this.button3);
             this.panel1.Controls.Add(this.LblNG);
@@ -184,7 +186,7 @@ namespace AUCWO
             this.LblNG.AutoSize = true;
             this.LblNG.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LblNG.ForeColor = System.Drawing.Color.Red;
-            this.LblNG.Location = new System.Drawing.Point(641, 143);
+            this.LblNG.Location = new System.Drawing.Point(262, 143);
             this.LblNG.Name = "LblNG";
             this.LblNG.Size = new System.Drawing.Size(38, 24);
             this.LblNG.TabIndex = 9;
@@ -195,7 +197,7 @@ namespace AUCWO
             this.LblOK.AutoSize = true;
             this.LblOK.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LblOK.ForeColor = System.Drawing.Color.Green;
-            this.LblOK.Location = new System.Drawing.Point(492, 143);
+            this.LblOK.Location = new System.Drawing.Point(113, 143);
             this.LblOK.Name = "LblOK";
             this.LblOK.Size = new System.Drawing.Size(38, 24);
             this.LblOK.TabIndex = 8;
@@ -206,7 +208,7 @@ namespace AUCWO
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.ForeColor = System.Drawing.Color.Red;
-            this.label4.Location = new System.Drawing.Point(580, 143);
+            this.label4.Location = new System.Drawing.Point(201, 143);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(46, 24);
             this.label4.TabIndex = 7;
@@ -231,7 +233,7 @@ namespace AUCWO
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.Color.Green;
-            this.label3.Location = new System.Drawing.Point(437, 143);
+            this.label3.Location = new System.Drawing.Point(58, 143);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(45, 24);
             this.label3.TabIndex = 6;
@@ -307,7 +309,7 @@ namespace AUCWO
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(283, 24);
             this.label7.TabIndex = 10;
-            this.label7.Text = "Auto Check Work Order 1.0.0";
+            this.label7.Text = "Auto Check Work Order 1.0.1";
             // 
             // panel2
             // 
@@ -331,6 +333,17 @@ namespace AUCWO
             this.Viewdata.ReadOnly = true;
             this.Viewdata.Size = new System.Drawing.Size(1126, 479);
             this.Viewdata.TabIndex = 0;
+            // 
+            // TimeRun
+            // 
+            this.TimeRun.AutoSize = true;
+            this.TimeRun.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TimeRun.ForeColor = System.Drawing.Color.Black;
+            this.TimeRun.Location = new System.Drawing.Point(437, 143);
+            this.TimeRun.Name = "TimeRun";
+            this.TimeRun.Size = new System.Drawing.Size(28, 24);
+            this.TimeRun.TabIndex = 11;
+            this.TimeRun.Text = "...";
             // 
             // Main
             // 
@@ -381,6 +394,7 @@ namespace AUCWO
         private Label label6;
         private Label label5;
         private Button button1;
+        private Label TimeRun;
     }
 }
 
