@@ -382,8 +382,12 @@ namespace AUCWO
                 MessageBox.Show("Chỉ ấn khi lỗi");
                 return;
             }
-
-            await WorkingThread.loadSAPAsync();
+            else
+            {
+                await WorkingThread.loadSAPAsync();
+                MessageBox.Show("OK đợi tí em làm mới dữ liệu nhé. ");
+            }
+            
 
         }
     }
