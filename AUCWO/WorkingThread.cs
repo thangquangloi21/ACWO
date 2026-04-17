@@ -292,7 +292,7 @@ namespace AUCWO
             //    Console.WriteLine($"Item: {it.Mapping} , Lot: {it.LotSP} , Status: {it.Status}");
 
 
-            //}
+            // }
 
 
 
@@ -348,8 +348,11 @@ namespace AUCWO
 
             //var sql = "SELECT wo_part FROM [Data_qad].[dbo].[wo_mstr] where wo__chr01 = @loc and wo_part = @item and wo_lot_next = @lot";
 
-            var sql = " SELECT  LOT_SERIAL  ,MES_PART FROM DB_SAP_DWH.dbo.WORK_ORDER_ALLOCATE " +
+            var sql = "SELECT  LOT_SERIAL  ,MES_PART FROM DB_SAP_DWH.dbo.WORK_ORDER_ALLOCATE " +
                 "WHERE MES_PART = @item AND LOT_SERIAL = @lot ";
+
+            //var sql = "SELECT  LOT_SERIAL  ,MES_PART FROM DB_SAP_DWH.dbo.WORK_ORDER_ALLOCATE " +
+            //    "WHERE PROD_LINE = 'EVS' and LOT_SERIAL = @lot ";
 
             SqlParameter[] para = new SqlParameter[]
             {
@@ -372,35 +375,31 @@ namespace AUCWO
         }
 
 
-
-
-        public static void CheckEvs()
+        public static Boolean CheckSAPEVS(string item, string lot)
         {
-            foreach (var it in AppData.Instance.items)
+
+            var sql = "SELECT  LOT_SERIAL  ,MES_PART FROM DB_SAP_DWH.dbo.WORK_ORDER_ALLOCATE " +
+                "WHERE PROD_LINE = 'EVS' and LOT_SERIAL = @lot ";
+
+            SqlParameter[] para = new SqlParameter[]
             {
-                var status = CheckSAP(it.Mapping, it.LotSP);
-
-                //it.Status = status ? "NG" : "OK";
-                // Nếu đã NG từ trước thì không ghi đè
-                if (string.Equals(it.Status, "NG", StringComparison.OrdinalIgnoreCase))
-                {
-                    //MessageBox.Show($"Có lỗi sảy ra với mã {it.ItemSAP} Vui Lòng Kiểm tra lại.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    
-                    it.Status = "Mã sản phẩm không đúng";
-                    continue;
-                }
-
-                // Quy ước: exists = true → NG; exists = false → OK
-                it.Status = status ? "NG" : "OK";
-
-                // (Tuỳ chọn) Log kết quả
-                Console.WriteLine($"Item: {it.Mapping} , Lot: {it.LotSP} , Status: {it.Status}");
-
+             //new SqlParameter("@item", item),
+             new SqlParameter("@lot", lot)
+            };
+            var data = DB.ExecuteQuery(sql, para);
+            if (data.Rows.Count > 0)
+            {
+                //Console.WriteLine($"Item: {item}, Lot: {lot}, Status: NG");
+                return true;
+            }
+            else
+            {
+                //Console.WriteLine($"Item: {item}, Lot: {lot}, Status: OK");
+                return false;
             }
 
-
+            //return false;
         }
-
 
 
 
@@ -592,11 +591,30 @@ namespace AUCWO
                 var item = it.Mapping.Trim();
                 var lot  = it.LotSP.Trim();
 
-                bool existsInSap = CheckSAP(item, lot);
+                bool existsInSap = CheckSAPEVS(item, lot);
 
                 it.Status = existsInSap ? "Đã tồn tại ở SAP" : "OK";
 
                 Console.WriteLine($"Item: {it.Mapping}, Lot: {it.LotSP}, Status: {it.Status}");
+            }
+        }
+
+        public static async Task loadSAPAsync()
+        {
+            try
+            {
+                using (var client = new System.Net.Http.HttpClient())
+                {
+                    var response = await client.PostAsync("http://10.239.2.10:6666/api/loaddata", null);
+                    string result = await response.Content.ReadAsStringAsync();
+
+                    System.Diagnostics.Debug.WriteLine("Status: " + response.StatusCode);
+                    System.Diagnostics.Debug.WriteLine("Result: " + result);
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("loadSAP error: " + ex.Message);
             }
         }
     }

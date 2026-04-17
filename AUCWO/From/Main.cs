@@ -371,11 +371,20 @@ namespace AUCWO
 
         }
 
-        private void LoadStatus(object sender, EventArgs e)
+        private async void LoadStatus(object sender, EventArgs e)
         {
             //Console.WriteLine(WorkingThread.GetTimeUpdate("MES"));
-            MessageBox.Show("Chỉ ấn khi lỗi");
-            
+
+            string update = SAPstt.Text;
+
+            if (update != "error")
+            {
+                MessageBox.Show("Chỉ ấn khi lỗi");
+                return;
+            }
+
+            await WorkingThread.loadSAPAsync();
+
         }
     }
 }
