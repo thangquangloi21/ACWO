@@ -77,13 +77,13 @@ namespace AUCWO
                     var worksheet = package.Workbook.Worksheets[0];
                     int rowCount = worksheet.Dimension.Rows;
                     string ITEMCODE = worksheet.Cells[1, 1].Value?.ToString().Trim();
-                    string LOT = worksheet.Cells[1, 9].Value?.ToString().Trim();
-                    string STATUS = worksheet.Cells[1, 11].Value?.ToString().Trim();
+                    string LOT = worksheet.Cells[1, 10].Value?.ToString().Trim();
+                    string STATUS = worksheet.Cells[1, 12].Value?.ToString().Trim();
                     //int colCount = worksheet.Dimension.Columns;
                     // kiểm tra xem đúng định dạng file chưa
                     //MessageBox.Show($"{ITEMCODE}");
                     Console.WriteLine($"Item = {ITEMCODE} , LOT = {LOT} , STATUS = {STATUS}");
-                    if (ITEMCODE != "Material Number for Order CAUFVD-MATNR" || LOT != "If Column and Batch Number AFPOD-CHARG" || STATUS != "STATUS")
+                    if (ITEMCODE != "Material Number for Order CAUFVD-MATNR" || LOT != "Batch Number AFPOD-CHARG" || STATUS != "STATUS")
                     {
                         MessageBox.Show("File chưa đúng định dạng", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         return;
@@ -107,11 +107,12 @@ namespace AUCWO
                         string StartDate = worksheet.Cells[row, 4].Text.Trim(); // Cột D
                         string EndDate = worksheet.Cells[row, 5].Text.Trim(); // Cột E
                         string OrderQty = worksheet.Cells[row, 6].Text.Trim(); // Cột F
-                        string Unit = worksheet.Cells[row, 7].Text.Trim(); // Cột G
-                        string Location = worksheet.Cells[row, 8].Text.Trim(); // Cột H
-                        string LotSP = worksheet.Cells[row, 9].Text.Trim();
-                        string ProductionVer = worksheet.Cells[row, 10].Text.Trim(); // Cột J
-                        string Status = worksheet.Cells[row, 11].Text.Trim(); // Cột K
+                        string scrap = worksheet.Cells[row, 7].Text.Trim(); // Cột G
+                        string Unit = worksheet.Cells[row, 8].Text.Trim(); // Cột H
+                        string Location = worksheet.Cells[row, 9].Text.Trim(); // Cột I
+                        string LotSP = worksheet.Cells[row, 10].Text.Trim(); // Cột J
+                        string ProductionVer = worksheet.Cells[row, 11].Text.Trim(); // Cột K
+                        string Status = worksheet.Cells[row, 12].Text.Trim(); // Cột L
 
 
                         // Tiền xử lý đầu vào
@@ -136,6 +137,7 @@ namespace AUCWO
                             StartDate = StartDate,
                             EndDate = EndDate,
                             OrderQty = OrderQty,
+                            Scrap = scrap,
                             Unit = Unit,
                             Location = Location,
                             LotSP = LotSP,

@@ -14,6 +14,8 @@ namespace AUCWO.Data
             public string StartDate { get; set; }
             public string EndDate { get; set; }
             public string OrderQty { get; set; }
+
+            public string Scrap { get; set; }
             public string Unit { get; set; }
             public string Location { get; set; }
             public string LotSP { get; set; }

@@ -118,6 +118,7 @@ namespace AUCWO
     new { DataPropertyName = "StartDate",     HeaderText = "Basic start date\nCAUFVD-GSTRP",                  Width = 120 },
     new { DataPropertyName = "EndDate",       HeaderText = "Basic finish date\nCAUFVD-GLTRP",                 Width = 120 },
     new { DataPropertyName = "OrderQty",      HeaderText = "Total Order Quantity\nCAUFVD-GAMNG",              Width = 110 },
+    new { DataPropertyName = "Scrap",      HeaderText = "Total Scrap Quantity in the Order\r\nCAUFVD-GASMG",              Width = 110 },
     new { DataPropertyName = "Unit",          HeaderText = "Common unit of measure\nCAUFVD-GMEIN",            Width = 90  },
     new { DataPropertyName = "Location",      HeaderText = "Storage location\nAFPOD-LGORT",                   Width = 110 },
     new { DataPropertyName = "LotSP",         HeaderText = "Batch Number\nAFPOD-CHARG",                       Width = 120 },

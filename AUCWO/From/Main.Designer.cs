@@ -33,6 +33,7 @@ namespace AUCWO
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
             this.panel1 = new System.Windows.Forms.Panel();
+            this.TimeRun = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.button1 = new System.Windows.Forms.Button();
             this.QADstt = new System.Windows.Forms.Label();
@@ -56,7 +57,6 @@ namespace AUCWO
             this.label7 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.Viewdata = new System.Windows.Forms.DataGridView();
-            this.TimeRun = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -86,6 +86,17 @@ namespace AUCWO
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1126, 178);
             this.panel1.TabIndex = 0;
+            // 
+            // TimeRun
+            // 
+            this.TimeRun.AutoSize = true;
+            this.TimeRun.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TimeRun.ForeColor = System.Drawing.Color.Black;
+            this.TimeRun.Location = new System.Drawing.Point(437, 143);
+            this.TimeRun.Name = "TimeRun";
+            this.TimeRun.Size = new System.Drawing.Size(28, 24);
+            this.TimeRun.TabIndex = 11;
+            this.TimeRun.Text = "...";
             // 
             // groupBox1
             // 
@@ -309,7 +320,7 @@ namespace AUCWO
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(283, 24);
             this.label7.TabIndex = 10;
-            this.label7.Text = "Auto Check Work Order 1.0.1";
+            this.label7.Text = "Auto Check Work Order 1.0.2";
             // 
             // panel2
             // 
@@ -333,17 +344,6 @@ namespace AUCWO
             this.Viewdata.ReadOnly = true;
             this.Viewdata.Size = new System.Drawing.Size(1126, 479);
             this.Viewdata.TabIndex = 0;
-            // 
-            // TimeRun
-            // 
-            this.TimeRun.AutoSize = true;
-            this.TimeRun.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TimeRun.ForeColor = System.Drawing.Color.Black;
-            this.TimeRun.Location = new System.Drawing.Point(437, 143);
-            this.TimeRun.Name = "TimeRun";
-            this.TimeRun.Size = new System.Drawing.Size(28, 24);
-            this.TimeRun.TabIndex = 11;
-            this.TimeRun.Text = "...";
             // 
             // Main
             // 
