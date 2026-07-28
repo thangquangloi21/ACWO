@@ -320,7 +320,7 @@ namespace AUCWO
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(283, 24);
             this.label7.TabIndex = 10;
-            this.label7.Text = "Auto Check Work Order 1.0.2";
+            this.label7.Text = "Auto Check Work Order 1.0.3";
             // 
             // panel2
             // 

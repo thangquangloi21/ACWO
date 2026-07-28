@@ -316,7 +316,7 @@ namespace AUCWO
 
 
 
-        public static Boolean CheckQAD_SAP(string loc, string item, string lot)
+        public static Boolean CheckQAD(string loc, string item, string lot)
         {
 
             //var sql = "SELECT wo_part FROM [Data_qad].[dbo].[wo_mstr] where wo__chr01 = @loc and wo_part = @item and wo_lot_next = @lot";
@@ -350,11 +350,17 @@ namespace AUCWO
 
             //var sql = "SELECT wo_part FROM [Data_qad].[dbo].[wo_mstr] where wo__chr01 = @loc and wo_part = @item and wo_lot_next = @lot";
 
-            var sql = "SELECT  LOT_SERIAL  ,MES_PART FROM DB_SAP_DWH.dbo.WORK_ORDER_ALLOCATE " +
-                "WHERE MES_PART = @item AND LOT_SERIAL = @lot ";
+            //var sql = "SELECT  LOT_SERIAL  ,MES_PART FROM DB_SAP_DWH.dbo.WORK_ORDER_ALLOCATE " +
+            //    "WHERE MES_PART = @item AND LOT_SERIAL = @lot ";
+
+
+            var sql = "SELECT  [WO part]  ,[Lot/Serial] FROM [SAPData].[dbo].[ZPPI189] " +
+                "WHERE [MES part] = @item AND [Lot/Serial] = @lot ";
 
             //var sql = "SELECT  LOT_SERIAL  ,MES_PART FROM DB_SAP_DWH.dbo.WORK_ORDER_ALLOCATE " +
             //    "WHERE PROD_LINE = 'EVS' and LOT_SERIAL = @lot ";
+
+
 
             SqlParameter[] para = new SqlParameter[]
             {
@@ -380,8 +386,11 @@ namespace AUCWO
         public static Boolean CheckSAPEVS(string item, string lot)
         {
 
-            var sql = "SELECT  LOT_SERIAL  ,MES_PART FROM DB_SAP_DWH.dbo.WORK_ORDER_ALLOCATE " +
-                "WHERE PROD_LINE = 'EVS' and LOT_SERIAL = @lot ";
+            //var sql = "SELECT  LOT_SERIAL  ,MES_PART FROM DB_SAP_DWH.dbo.WORK_ORDER_ALLOCATE " +
+            //    "WHERE PROD_LINE = 'EVS' and LOT_SERIAL = @lot ";
+
+            var sql = "SELECT  [WO part]  ,[Lot/Serial] FROM [SAPData].[dbo].[ZPPI189] " +
+                "WHERE [Lot/Serial] = @lot ";
 
             SqlParameter[] para = new SqlParameter[]
             {
@@ -426,7 +435,7 @@ namespace AUCWO
         {
             foreach (var it in AppData.Instance.items)
             {
-                var status = CheckQAD_SAP("03010", it.Mapping, it.LotSP);
+                var status = CheckQAD("03010", it.Mapping, it.LotSP);
 
                 //it.Status = status ? "NG" : "OK";
                 // Nếu đã NG từ trước thì không ghi đè
@@ -561,7 +570,7 @@ namespace AUCWO
                 var item = it.Mapping.Trim();
                 var lot = it.LotSP.Trim();
 
-                bool existsInQAD = CheckQAD_SAP("03010", item, lot);
+                bool existsInQAD = CheckQAD("03010", item, lot);
                 bool existsInSAP = CheckSAP(item, lot);
 
                 if (existsInQAD && existsInSAP)
@@ -590,10 +599,10 @@ namespace AUCWO
                 if (string.IsNullOrWhiteSpace(it.Mapping) || string.IsNullOrWhiteSpace(it.LotSP))
                     continue;
 
-                var item = it.Mapping.Trim();
+                var itemSAP = it.ItemSAP.Trim();
                 var lot  = it.LotSP.Trim();
 
-                bool existsInSap = CheckSAPEVS(item, lot);
+                bool existsInSap = CheckSAPEVS(itemSAP, lot);
 
                 it.Status = existsInSap ? "Đã tồn tại ở SAP" : "OK";
 

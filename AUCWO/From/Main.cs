@@ -66,7 +66,7 @@ namespace AUCWO
             QADstt.Text = "Đang cập nhật...";
 
             // await trên Task<string> là hợp lệ
-            var sap = await WorkingThread.GetTimeUpdate("SAP");
+            var sap = await WorkingThread.GetTimeUpdate("INT189");
             var qad = await WorkingThread.GetTimeUpdate("QAD");
 
             SAPstt.Text = sap;
